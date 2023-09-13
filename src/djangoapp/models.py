@@ -9,4 +9,4 @@ class Computer(models.Model):
     location = models.CharField(max_length=30)
 
 def __unicode__(self):
-    return self.computer_name
+    return self.users_name + self.IP_address
