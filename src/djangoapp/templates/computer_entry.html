@@ -164,12 +164,15 @@
     {% include 'navbar.html' %} 
 <main class="container">
   <div class="bg-body-tertiary p-5 rounded">
-    <h1> {{ title }}</h1>
-    <form method="post" action="">
-        {% csrf_token %}
-        {{form.as_p}}
-        <input type="submit" value="Save" />
-    </form>
+    <div class="row">
+      <h1> {{ title }}</h1>
+      <form method="post" action="">
+          {% csrf_token %}
+          {{form.as_p}}
+          <input class="btn btn-bd-primary" type="submit" value="Save" />
+      </form>
+    </div>
+   
   </div>
 </main>
 <script src="{% static 'js/bootstrap.bundle.min.js' %}" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
