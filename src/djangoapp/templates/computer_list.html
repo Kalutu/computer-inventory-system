@@ -164,7 +164,7 @@
     {% include 'navbar.html' %} 
 <main class="container">
   <div class="bg-body-tertiary p-5 rounded">
-    <h1> {{ title }}</h1>
+    <h1 class="title"> {{ title }}</h1>
     <table>
         <tr>
             <th>#</th>
@@ -177,7 +177,7 @@
         {% for instance in queryset %}
         <tr>
             <td>{{forloop.counter}}</td>
-            <td>{{instance.Computer_name}}</td>
+            <td>{{instance.computer_name}}</td>
             <td>{{instance.MAC_address}}</td>
             <td>{{instance.IP_address}}</td>
             <td>{{instance.users_name}}</td>
