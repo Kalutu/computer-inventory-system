@@ -8,3 +8,7 @@ class ComputerForm(forms.ModelForm):
         widgets = {
             'purchase_date': forms.DateInput(attrs={'class': 'dateinput'}),
         }
+class ComputerSearchForm(forms.ModelForm):
+    class Meta:
+        model = Computer
+        fields = ['computer_name', 'users_name']
