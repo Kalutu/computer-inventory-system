@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import ComputerForm
+from .forms import ComputerForm, ComputerSearchForm
 from .models import Computer
 from django.shortcuts import get_object_or_404
 
@@ -26,11 +26,18 @@ def computer_entry(request):
     return render(request, "computer_entry.html", context)
 
 def computer_list(request):
-    title = 'List of all computers'
-    queryset = Computer.objects.all()
+    title = "List of all computers"
+    form = ComputerSearchForm(request.POST or None)
+    
+    
+    if request.method == 'POST':
+        queryset = Computer.objects.all().order_by('-timestamp').filter(computer_name__icontains=form['computer_name'].value(), users_name__icontains=form['users_name'].value())
+    else:
+        queryset = Computer.objects.all()
     context = {
         "title": title,
         "queryset": queryset,
+        "form": form,
     }
     return render(request, "computer_list.html",context)
 

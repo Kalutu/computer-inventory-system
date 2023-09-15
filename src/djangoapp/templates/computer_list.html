@@ -1,4 +1,5 @@
 {% load static %}
+{% load bootstrap5 %}
 
 <!doctype html>
 <html lang="en" data-bs-theme="auto">
@@ -165,6 +166,23 @@
 <main class="container">
   <div class="bg-body-tertiary p-5 rounded">
     <h1 class="title"> {{ title }}</h1>
+    <div class="row">
+      <form method="post" action="" class="pr-4">
+        {% csrf_token %}
+        {{ form.media }}
+        <div class="row align-items-center">
+            {% for field in form %}
+            <div class="col-sm-5">
+                {% bootstrap_field field %}
+            </div>
+            {% endfor %}
+            <div class="col-sm-2">
+                <input class="btn btn-primary mt-3" type="submit" value="Search" />
+            </div>
+        </div>
+      </form>
+    
+    </div>
     <table>
         <tr>
             <th>#</th>
