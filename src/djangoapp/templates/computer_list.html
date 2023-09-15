@@ -173,6 +173,7 @@
             <th>IP ADDRESS</th>
             <th>USER'S NAME</th>
             <th>LOCATION</th>
+            <th>ACTION</th>
         </tr>
         {% for instance in queryset %}
         <tr>
@@ -182,6 +183,7 @@
             <td>{{instance.IP_address}}</td>
             <td>{{instance.users_name}}</td>
             <td>{{instance.location}}</td>
+            <td><a href="{% url 'computer_delete' id=instance.id %}">Delete</a></td>
         </tr>
         {% endfor %}
     </table>
