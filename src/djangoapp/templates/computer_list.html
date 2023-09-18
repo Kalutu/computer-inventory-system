@@ -164,6 +164,16 @@
 
     {% include 'navbar.html' %} 
 <main class="container">
+  <div class="alert alert-success">
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+  </div>
+  
   <div class="bg-body-tertiary p-5 rounded">
     <h1 class="title"> {{ title }}</h1>
     <div class="row">
