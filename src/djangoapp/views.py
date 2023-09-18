@@ -17,6 +17,7 @@ def computer_entry(request):
     
     if form.is_valid():
         form.save()
+        form.save_m2m()
         return redirect('/computer_list')
     context = {
         "title": title,
@@ -48,6 +49,7 @@ def computer_edit(request, id=None):
     if form.is_valid():
         instance = form.save(commit=False)
         instance.save()
+        form.save_m2m()
         return redirect('/computer_list')
 
     context = {

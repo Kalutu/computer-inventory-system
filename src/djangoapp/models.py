@@ -13,7 +13,7 @@ class Computer(models.Model):
     IP_address = models.CharField(max_length=30)
     MAC_address = models.CharField(max_length=30)
     timestamp = models.DateField(auto_now_add = True, auto_now = False, blank=True)
-    operating_system = models.ForeignKey(Operating_system, blank=True, null=True, on_delete=models.CASCADE)
+    operating_system = models.ManyToManyField(Operating_system, blank=True)
     users_name = models.CharField(max_length=30, blank=True, null=True)
     location = models.CharField(max_length=30)
     purchase_date = models.DateField("Purchase mm-dd-yy",auto_now_add = False, auto_now = False, blank=True, null=True)
