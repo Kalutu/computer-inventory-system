@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from .forms import ComputerForm, ComputerSearchForm
 from .models import Computer
 from django.shortcuts import get_object_or_404
+from django.http import HttpResponse
+import csv
 
 # Create your views here.
 def home(request):
@@ -40,6 +42,15 @@ def computer_list(request):
         "queryset": queryset,
         "form": form,
     }
+    if form['export_to_CSV'].value() == True:
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="Computer list.csv"'
+        writer = csv.writer(response)
+        writer.writerow(['COMPUTER NAME', 'IP Address', 'MAC ADDRESS', 'OS', 'USERNAME', 'LOCATION', 'PURCHASE DATE', 'TIMESTAMP'])
+        instance = queryset
+        for row in instance:
+            writer.writerow([row.computer_name, row.IP_address, row.MAC_address, row.operating_system.all(), row.users_name, row.location, row.purchase_date, row.timestamp])
+        return response
     return render(request, "computer_list.html",context)
 
 def computer_edit(request, id=None):
