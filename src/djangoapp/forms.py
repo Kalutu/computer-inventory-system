@@ -1,5 +1,5 @@
 from django import forms
-from .models import Computer
+from .models import Computer, Operating_system
 
 class ComputerForm(forms.ModelForm):
     class Meta:
