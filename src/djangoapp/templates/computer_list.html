@@ -189,6 +189,7 @@
             <th>PC NAME</th>
             <th>MAC ADDR</th>
             <th>IP ADDRESS</th>
+            <th>Operating System</th>
             <th>USER'S NAME</th>
             <th>LOCATION</th>
             <th>ACTION</th>
@@ -199,6 +200,7 @@
             <td><a href="{% url 'computer_edit' id=instance.id %}"> {{instance.computer_name}}</td>
             <td>{{instance.MAC_address}}</td>
             <td>{{instance.IP_address}}</td>
+            <td>{{instance.operating_system}}</td>
             <td>{{instance.users_name}}</td>
             <td>{{instance.location}}</td>
             <td><a href="{% url 'computer_delete' id=instance.id %}">Delete</a></td>
