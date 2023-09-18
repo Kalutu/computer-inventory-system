@@ -2,6 +2,12 @@ from django.db import models
 from datetime import datetime, date
 
 # Create your models here.
+class Operating_system(models.Model):
+    operating_system = models.CharField(max_length=30, blank=True)
+
+    def __unicode__(self):
+        return self.operating_system
+
 class Computer(models.Model):
     computer_name = models.CharField(max_length=30, blank=True, null=True)
     IP_address = models.CharField(max_length=30)
