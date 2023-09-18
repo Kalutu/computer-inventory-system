@@ -5,7 +5,7 @@ from datetime import datetime, date
 class Operating_system(models.Model):
     operating_system = models.CharField(max_length=30, blank=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.operating_system
 
 class Computer(models.Model):
@@ -13,15 +13,7 @@ class Computer(models.Model):
     IP_address = models.CharField(max_length=30)
     MAC_address = models.CharField(max_length=30)
     timestamp = models.DateField(auto_now_add = True, auto_now = False, blank=True)
-    os_choice = (
-            ('Mac OS', 'Mac OS'),
-            ('Windows 11', 'Windows 11'),
-            ('Windows 10', 'Windows 10'),
-            ('Windows 8', 'Windows 8'),
-            ('Linux', 'Linux'),
-        )
-    operating_system = models.CharField(max_length=30, blank=True, null=True, choices=os_choice)
-
+    operating_system = models.ForeignKey(Operating_system, blank=True, null=True, on_delete=models.CASCADE)
     users_name = models.CharField(max_length=30, blank=True, null=True)
     location = models.CharField(max_length=30)
     purchase_date = models.DateField("Purchase mm-dd-yy",auto_now_add = False, auto_now = False, blank=True, null=True)
