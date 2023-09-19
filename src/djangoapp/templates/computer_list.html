@@ -176,7 +176,7 @@
   </div>
   
   <div class="bg-body-tertiary p-5 rounded">
-    <h1 class="title"> {{ title }}</h1>
+    <h1 class="title mb-5"> {{ title }}</h1>
     <div class="row mb-3">
       <form method="post" action="" class="pr-4">
           {% csrf_token %}
@@ -212,7 +212,7 @@
         <tr>
           <td>{{ forloop.counter }}</td>
           {% if perms.djangoapp.change_computer %}
-          <td><a href="{% url 'computer_edit' id=instance.id %}">{{ instance.computer_name }}</a></td>
+          <td><a href="{% url 'computer_edit' id=instance.id %}" data-toggle="tooltip" title="edit this item">{{ instance.computer_name }}</a></td>
           {%else%}
           <td>{{ instance.computer_name }}</td>
           {%endif%}
@@ -227,9 +227,9 @@
           <td>{{ instance.users_name }}</td>
           <td>{{ instance.location }}</td>
           {% if perms.djangoapp.delete_computer %}
-          <td><a href="{% url 'computer_delete' id=instance.id %}">Delete</a></td>
+          <td><a href="{% url 'computer_delete' id=instance.id %}" data-toggle="tooltip" title="delete this item"><img style="height: 20px;" src="{% static 'img/del.png' %}"></a></td>
           {%else%}
-          <td>Delete</td>
+          <td><img style="height: 20px;" src="{% static 'img/del.png' %}"></td>
           {% endif %}
         </tr>
       
