@@ -27,7 +27,7 @@ def computer_entry(request):
     context = {
         "title": title,
         "form": form,
-}
+    }
     
     return render(request, "computer_entry.html", context)
 
