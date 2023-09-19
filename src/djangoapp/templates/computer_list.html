@@ -206,15 +206,21 @@
         </tr>
         {% for instance in queryset %}
         <tr>
-            <td>{{forloop.counter}}</td>
-            <td><a href="{% url 'computer_edit' id=instance.id %}"> {{instance.computer_name}}</td>
-            <td>{{instance.MAC_address}}</td>
-            <td>{{instance.IP_address}}</td>
-            <td>{{instance.operating_system.all}}</td>
-            <td>{{instance.users_name}}</td>
-            <td>{{instance.location}}</td>
-            <td><a href="{% url 'computer_delete' id=instance.id %}">Delete</a></td>
+          <td>{{ forloop.counter }}</td>
+          <td><a href="{% url 'computer_edit' id=instance.id %}">{{ instance.computer_name }}</a></td>
+          <td>{{ instance.MAC_address }}</td>
+          <td>{{ instance.IP_address }}</td>
+          <td>
+              {% for os in instance.operating_system.all %}
+                  {{ os.operating_system }}
+                  {% if not forloop.last %}, {% endif %}
+              {% endfor %}
+          </td>
+          <td>{{ instance.users_name }}</td>
+          <td>{{ instance.location }}</td>
+          <td><a href="{% url 'computer_delete' id=instance.id %}">Delete</a></td>
         </tr>
+      
         {% endfor %}
     </table>
   </div>
