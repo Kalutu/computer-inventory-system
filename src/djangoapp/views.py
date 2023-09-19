@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import ComputerForm, ComputerSearchForm
+from .forms import ComputerForm, ComputerSearchForm, OperatingSystemForm
 from .models import Computer
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
@@ -79,7 +79,20 @@ def computer_delete(request, id=None):
    instance.delete()
    return redirect("computer_list")
 
-
-
+def settings(request):
+    title = 'Add operating system'
+    form = OperatingSystemForm(request.POST or None)
+    
+    if form.is_valid():
+        form.save()
+        messages.success(request, 'Successfully Saved')
+        return redirect('/computer_list')
+    
+    context = {
+        "title": title,
+        "form": form,
+    }
+    
+    return render(request, "settings.html", context)
 
 
