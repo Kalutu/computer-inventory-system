@@ -164,6 +164,7 @@
 
     {% include 'navbar.html' %} 
 <main class="container">
+  {%if request.user.is_authenticated%}
   <div class="alert alert-success">
     {% if messages %}
         <ul class="messages">
@@ -224,6 +225,9 @@
         {% endfor %}
     </table>
   </div>
+{%else%}
+<p>Log in <a href="/accounts/login">here</a></p>
+{%endif%}
 </main>
 <script src="{% static 'js/bootstrap.bundle.min.js' %}" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 

@@ -164,11 +164,19 @@
     {% include 'navbar.html' %} 
 
 <main class="container">
-  <div class="bg-body-tertiary p-5 rounded">
-    <h1> {{ title }}</h1>
-    <p class="lead">This is the home page.</p>
-    <a class="btn btn-lg btn-primary" href="/docs/5.3/components/navbar/" role="button">Log in</a>
+  <div class="bg-body-tertiary p-5 rounded d-flex justify-content-center align-items-center">
+    <div class="text-center">
+      <h1>{{ title }}</h1>
+  
+      {% block title %}
+      {% endblock %}
+  
+      {% block content %}
+      {% endblock %}
+    </div>
   </div>
+  
+      
 </main>
 <script src="{% static 'js/bootstrap.bundle.min.js' %}" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 
