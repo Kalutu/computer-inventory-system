@@ -208,7 +208,11 @@
         {% for instance in queryset %}
         <tr>
           <td>{{ forloop.counter }}</td>
+          {% if perms.djangoapp.change_computer %}
           <td><a href="{% url 'computer_edit' id=instance.id %}">{{ instance.computer_name }}</a></td>
+          {%else%}
+          <td>{{ instance.computer_name }}</td>
+          {%endif%}
           <td>{{ instance.MAC_address }}</td>
           <td>{{ instance.IP_address }}</td>
           <td>
@@ -219,7 +223,11 @@
           </td>
           <td>{{ instance.users_name }}</td>
           <td>{{ instance.location }}</td>
+          {% if perms.djangoapp.delete_computer %}
           <td><a href="{% url 'computer_delete' id=instance.id %}">Delete</a></td>
+          {%else%}
+          <td>Delete</td>
+          {% endif %}
         </tr>
       
         {% endfor %}
