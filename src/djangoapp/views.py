@@ -8,7 +8,7 @@ import csv
 
 # Create your views here.
 def home(request):
-    title = 'Welcome: This is the Home Page'
+    title = 'Computer Inventory Management System'
     context = {
         "title": title,
     }
