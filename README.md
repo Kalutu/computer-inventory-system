@@ -1,4 +1,4 @@
-# Computer Inventory Management System (CIMS) v1.1.0
+# Computer Inventory Management System (CIMS)
 Computer Inventory Management System (CIMS) is a web-based application built with Django that enables you to efficiently manage and monitor computer assets within your organization.
 
 ## Overview
