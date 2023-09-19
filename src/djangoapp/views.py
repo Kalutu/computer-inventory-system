@@ -19,14 +19,15 @@ def computer_entry(request):
     form = ComputerForm(request.POST or None)
     
     if form.is_valid():
-        form.save()
-        form.save_m2m()
+        computer = form.save(commit=False) 
+        computer.save() 
+        form.save_m2m() 
         messages.success(request, 'Successfully Saved')
         return redirect('/computer_list')
     context = {
         "title": title,
         "form": form,
-    }
+}
     
     return render(request, "computer_entry.html", context)
 

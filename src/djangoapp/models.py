@@ -19,5 +19,5 @@ class Computer(models.Model):
     purchase_date = models.DateField("Purchase mm-dd-yy",auto_now_add = False, auto_now = False, blank=True, null=True)
     export_to_CSV = models.BooleanField(default=False)
     
-def __unicode__(self):
+def __str__(self):
     return self.users_name + self.IP_address
