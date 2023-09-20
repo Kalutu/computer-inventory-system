@@ -1,0 +1,75 @@
+{% extends "header.html" %}
+{% load static %}
+{% load bootstrap5 %}
+{% block header %}
+
+<main class="container">
+  {%if request.user.is_authenticated%}
+  <div class="alert alert-success">
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+  </div>
+  
+  <div class="bg-body-tertiary p-5 rounded">
+    <h1 class="title mb-5"> {{ title }}</h1>
+    <div class="row mb-3">
+      <form method="post" action="" class="pr-4">
+          {% csrf_token %}
+          {{ form.media }}
+          <div class="row align-items-center">
+              {% for field in form %}
+              <div class="col-sm-3">
+                  {% bootstrap_field field %}
+              </div>
+              {% if field.name == 'export_to_CSV' %}
+              <div class="col-sm-3 ml-auto">
+                  <input class="btn btn-primary" type="submit" value="Search" />
+              </div>
+              {% endif %}
+              {% endfor %}
+          </div>
+      </form>
+    </div>
+  
+
+    <table>
+        <tr>
+            <th>#</th>
+            <th>PC NAME</th>
+            <th>MAC ADDR</th>
+            <th>IP ADDRESS</th>
+            <th>Operating System</th>
+            <th>USER'S NAME</th>
+            <th>LOCATION</th>
+        </tr>
+        {% for instance in queryset %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ instance.computer_name }}</td>
+          <td>{{ instance.MAC_address }}</td>
+          <td>{{ instance.IP_address }}</td>
+          <td>
+              {% for os in instance.operating_system.all %}
+                  {{ os.operating_system }}
+                  {% if not forloop.last %}, {% endif %}
+              {% endfor %}
+          </td>
+          <td>{{ instance.users_name }}</td>
+          <td>{{ instance.location }}</td>
+        </tr>
+      
+        {% endfor %}
+    </table>
+  </div>
+  {%else%}
+  <p>Log in <a href="/accounts/login">here</a></p>
+  {%endif%}
+</main>
+
+
+{% endblock header %}
