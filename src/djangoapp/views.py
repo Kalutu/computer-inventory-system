@@ -22,8 +22,22 @@ def computer_entry(request):
         computer = form.save(commit=False) 
         computer.save() 
         form.save_m2m() 
+
+        history_entry = ComputerHistory(
+            computer_name=computer.computer_name,
+            IP_address=computer.IP_address,
+            MAC_address=computer.MAC_address,
+            users_name=computer.users_name,
+            location=computer.location,
+            purchase_date=computer.purchase_date,
+        )
+        history_entry.save()
+
+        history_entry.operating_system.set(computer.operating_system.all())
+
         messages.success(request, 'Successfully Saved')
         return redirect('/computer_list')
+    
     context = {
         "title": title,
         "form": form,
@@ -35,16 +49,17 @@ def computer_list(request):
     title = "List of all computers"
     form = ComputerSearchForm(request.POST or None)
     
-    
     if request.method == 'POST':
         queryset = Computer.objects.all().order_by('-timestamp').filter(computer_name__icontains=form['computer_name'].value(), users_name__icontains=form['users_name'].value())
     else:
         queryset = Computer.objects.all()
+    
     context = {
         "title": title,
         "queryset": queryset,
         "form": form,
     }
+    
     if form['export_to_CSV'].value() == True:
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="Computer list.csv"'
@@ -52,18 +67,35 @@ def computer_list(request):
         writer.writerow(['COMPUTER NAME', 'IP Address', 'MAC ADDRESS', 'OS', 'USERNAME', 'LOCATION', 'PURCHASE DATE', 'TIMESTAMP'])
         instance = queryset
         for row in instance:
-            writer.writerow([row.computer_name, row.IP_address, row.MAC_address, row.operating_system.all(), row.users_name, row.location, row.purchase_date, row.timestamp])
+            writer.writerow([row.computer_name, row.IP_address, row.MAC_address, ', '.join([os.name for os in row.operating_system.all()]), row.users_name, row.location, row.purchase_date, row.timestamp])
         return response
-    return render(request, "computer_list.html",context)
+    
+    return render(request, "computer_list.html", context)
 
 def computer_edit(request, id=None):
     instance = get_object_or_404(Computer, id=id)
     form = ComputerForm(request.POST or None, instance=instance)
 
     if form.is_valid():
+        history_entry = ComputerHistory(
+            computer_name=instance.computer_name,
+            IP_address=instance.IP_address,
+            MAC_address=instance.MAC_address,
+            users_name=instance.users_name,
+            location=instance.location,
+            purchase_date=instance.purchase_date,
+        )
+        history_entry.save()
+        
+        history_entry.operating_system.set(instance.operating_system.all())
+
         instance = form.save(commit=False)
         instance.save()
-        form.save_m2m()
+       
+        instance.operating_system.clear()
+        for os in form.cleaned_data['operating_system']:
+            instance.operating_system.add(os)
+        
         messages.success(request, 'Successfully Saved')
         return redirect('/computer_list')
 
@@ -72,12 +104,48 @@ def computer_edit(request, id=None):
         "instance": instance,
         "form": form,
     }
+
+    return render(request, "computer_entry.html", context)
+
+    instance = get_object_or_404(Computer, id=id)
+    form = ComputerForm(request.POST or None, instance=instance)
+
+    if form.is_valid():
+       
+        history_entry = ComputerHistory(
+            computer_name=instance.computer_name,
+            IP_address=instance.IP_address,
+            MAC_address=instance.MAC_address,
+            users_name=instance.users_name,
+            location=instance.location,
+            purchase_date=instance.purchase_date,
+            timestamp=instance.timestamp,
+        )
+        history_entry.save()  
+
+        instance = form.save(commit=False)
+        instance.save()
+        
+        instance.operating_system.clear()
+   
+        for os in form.cleaned_data['operating_system']:
+            instance.operating_system.add(os)
+        
+        messages.success(request, 'Successfully Saved')
+        return redirect('/computer_list')
+
+    context = {
+        "title": 'Edit ' + str(instance.computer_name),
+        "instance": instance,
+        "form": form,
+    }
+
     return render(request, "computer_entry.html", context)
 
 def computer_delete(request, id=None):
-   instance = get_object_or_404(Computer, id=id)
-   instance.delete()
-   return redirect("computer_list")
+    instance = get_object_or_404(Computer, id=id)
+    instance.delete()
+    return redirect("computer_list")
 
 def settings(request):
     title = 'Add operating system'
@@ -102,4 +170,4 @@ def computerhistory_list(request):
        "title": title,
        "queryset": queryset,
     }
-    return render(request, "computerhistory_list.html",context)
+    return render(request, "computerhistory_list.html", context)
