@@ -102,4 +102,4 @@ def computerhistory_list(request):
        "title": title,
        "queryset": queryset,
     }
-    return render(request, "computer_list.html",context)
+    return render(request, "computerhistory_list.html",context)
