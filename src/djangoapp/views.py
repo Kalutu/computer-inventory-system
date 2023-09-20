@@ -95,4 +95,11 @@ def settings(request):
     
     return render(request, "settings.html", context)
 
-
+def computerhistory_list(request):
+    title = 'Update history'
+    queryset = ComputerHistory.objects.all()
+    context = {
+       "title": title,
+       "queryset": queryset,
+    }
+    return render(request, "computer_list.html",context)
