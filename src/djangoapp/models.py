@@ -21,3 +21,13 @@ class Computer(models.Model):
     
     def __str__(self):
         return self.users_name + self.IP_address
+
+class ComputerHistory(models.Model):
+    computer_name = models.CharField(max_length=30, blank=True, null=True)
+    IP_address = models.CharField(max_length=30, blank=True, null=True)
+    MAC_address = models.CharField(max_length=30, blank=True, null=True)
+    operating_system = models.ForeignKey(Operating_system, blank=True, null=True, on_delete=models.SET_NULL)
+    users_name = models.CharField(max_length=30, blank=True, null=True)
+    location = models.CharField(max_length=30, blank=True, null=True)
+    purchase_date = models.DateField("Purchase Date(mm/dd/2019)", auto_now_add=False, auto_now=False, blank=True, null=True)
+    timestamp = models.DateField(auto_now_add=True, auto_now=False, blank=True, null=True)
