@@ -5,10 +5,17 @@
 <main class="container">
   <div class="bg-body-tertiary p-5 rounded d-flex justify-content-center align-items-center">
     <div class="text-center">
-      <h1 class="title">{{ title }}</h1>
-      <div class="aligncenter mt-5">
-        <img style="height: 500px;" src="../static/img/pc.png">
-     </div>
+      {%if request.user.is_authenticated%}
+        <h1 class="title">{{ title }}</h1>
+        <div class="mt-5">
+          <h3 class="mb-5>Welcome {{ user }}</h3>
+        </div>
+          <img style="height: 500px;" src="../static/img/pc.png">
+      {% else %}
+        <p>Login <a href="/accounts/login">here</a></p>
+      {% endif %}
+
+     
       {% block title %}
       {% endblock %}
   
