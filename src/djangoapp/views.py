@@ -107,41 +107,6 @@ def computer_edit(request, id=None):
 
     return render(request, "computer_entry.html", context)
 
-    instance = get_object_or_404(Computer, id=id)
-    form = ComputerForm(request.POST or None, instance=instance)
-
-    if form.is_valid():
-       
-        history_entry = ComputerHistory(
-            computer_name=instance.computer_name,
-            IP_address=instance.IP_address,
-            MAC_address=instance.MAC_address,
-            users_name=instance.users_name,
-            location=instance.location,
-            purchase_date=instance.purchase_date,
-            timestamp=instance.timestamp,
-        )
-        history_entry.save()  
-
-        instance = form.save(commit=False)
-        instance.save()
-        
-        instance.operating_system.clear()
-   
-        for os in form.cleaned_data['operating_system']:
-            instance.operating_system.add(os)
-        
-        messages.success(request, 'Successfully Saved')
-        return redirect('/computer_list')
-
-    context = {
-        "title": 'Edit ' + str(instance.computer_name),
-        "instance": instance,
-        "form": form,
-    }
-
-    return render(request, "computer_entry.html", context)
-
 def computer_delete(request, id=None):
     instance = get_object_or_404(Computer, id=id)
     instance.delete()
